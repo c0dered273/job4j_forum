@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link type="text/css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+    <div th:replace="fragments/layout :: fixed-header(title = ~{:: title/text()}, username = ${username})"></div>
+    <div class="container">
+        <div class="card mt-3">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">#</th>
+                        <th scope="col">Тема</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Дата создания</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="post,iterStat : ${posts}">
+                        <th scope="row"><a th:href="@{'/post/' + ${post.getId()}}">edit</a></th>
+                        <th scope="row" th:text="${iterStat.index + 1}"></th>
+                        <td th:text="${post.getName()}">none</td>
+                        <td th:text="${post.getDesc()}">none</td>
+                        <td th:text="${#temporals.format(post.getCreated(), 'dd-MM-yyyy HH:mm')}">none</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

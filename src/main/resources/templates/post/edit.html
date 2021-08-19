@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New post</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/layout :: fixed-header(title = ~{:: title/text()}, username = ${username})"></div>
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-body" th:with="newPost=${#strings.equalsIgnoreCase(post_id, 'new')}">
+            <form name='editPost'
+                  th:action= "${newPost} ? '/post' : '/post/' + ${post_id}"
+                  th:method="${newPost} ? 'post' : 'put'">
+                <div class="mb-3">
+                    <label for="postName" class="form-label">Post name</label>
+                    <input type="text" class="form-control" id="postName" name="name"
+                           th:value="${newPost} ? '' : ${post.getName()}">
+                </div>
+                <div class="mb-3">
+                    <label for="postDesc" class="form-label">Description</label>
+                    <textarea class="form-control" id="postDesc" rows="3" name="desc"
+                              th:text="${newPost} ? '' : ${post.getDesc()}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-secondary" href="/">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
