@@ -38,7 +38,9 @@ public class PostController {
     public String newPost(@ModelAttribute Post post) {
         var user = users.getLoggedUser();
         post.setId(0L);
-        post.setUser(user);
+        post.setUser(users.getByName(user.getUsername())
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR)));
         post.setCreated(LocalDateTime.now());
         posts.save(post);
         return "redirect:/";
@@ -63,7 +65,9 @@ public class PostController {
                                 @PathVariable(value = "id") Long id) {
         var user = users.getLoggedUser();
         post.setId(id);
-        post.setUser(user);
+        post.setUser(users.getByName(user.getUsername())
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR)));
         post.setCreated(LocalDateTime.now());
         posts.save(post);
         return "redirect:/";
