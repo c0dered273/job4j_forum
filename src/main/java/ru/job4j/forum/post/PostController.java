@@ -31,7 +31,7 @@ public class PostController {
         var user = users.getLoggedUser();
         model.addAttribute("username", user.getUsername());
         model.addAttribute("post_id", "new");
-        return "/post/edit";
+        return "post/edit";
     }
 
     @PostMapping("/post")
@@ -57,7 +57,7 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         model.addAttribute("post", post);
-        return "/post/edit";
+        return "post/edit";
     }
 
     @PutMapping("/post/{id}")
